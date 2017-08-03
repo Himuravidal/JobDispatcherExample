@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.firebase.jobdispatcher.Constraint;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
 import com.firebase.jobdispatcher.GooglePlayDriver;
 import com.firebase.jobdispatcher.Job;
@@ -38,10 +39,10 @@ public class MainActivity extends AppCompatActivity {
                 if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                         &&
                         ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    setJob();
-                } else {
                     String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
                     requestPermissions(permissions, RC_GEO);
+                } else {
+                    setJob();
                 }
             }
         });
@@ -60,12 +61,12 @@ public class MainActivity extends AppCompatActivity {
         Job myJob = dispatcher.newJobBuilder()
                 .setService(GeoJob.class) // the JobService that will be called
                 .setTag("GEO_TAG")        // uniquely identifies the job
-                .setRecurring(false)
+                .setRecurring(true)
                 .setLifetime(Lifetime.FOREVER)
                 .setTrigger(Trigger.executionWindow(5, 30))
-                       /* .setConstraints(
-                                Constraint.ON_UNMETERED_NETWORK
-                        )*/
+                       .setConstraints(
+                                Constraint.DEVICE_CHARGING
+                        )
                 .build();
 
         dispatcher.mustSchedule(myJob);
