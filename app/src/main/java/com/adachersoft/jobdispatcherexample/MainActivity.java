@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                     String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
                     requestPermissions(permissions, RC_GEO);
                 } else {
-                    setJob();
+                    setGeoJob();
                 }
             }
         });
