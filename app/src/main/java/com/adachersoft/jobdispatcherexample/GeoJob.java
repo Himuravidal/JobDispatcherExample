@@ -1,6 +1,7 @@
 package com.adachersoft.jobdispatcherexample;
 
 import android.location.Location;
+import android.os.Looper;
 import android.util.Log;
 
 import com.firebase.jobdispatcher.JobParameters;
@@ -36,6 +37,13 @@ public class GeoJob extends JobService {
                 }
             }
         });
+
+         if (Looper.getMainLooper().getThread() == Thread.currentThread()) {
+            Log.d("THREAD", Thread.currentThread().getName());
+        } else {
+             Log.d("THREAD", Thread.currentThread().getName() + "No es main");
+        }
+
 
 
         return false;

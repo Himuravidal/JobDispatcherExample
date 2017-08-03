@@ -41,10 +41,11 @@ public class MainActivity extends AppCompatActivity {
                 if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                         &&
                         ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    setGeoJob();
-                } else {
+
                     String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
                     requestPermissions(permissions, RC_GEO);
+                } else {
+                    setJob();
                 }
             }
         });
@@ -90,9 +91,9 @@ public class MainActivity extends AppCompatActivity {
                 .setRecurring(true)
                 .setLifetime(Lifetime.FOREVER)
                 .setTrigger(Trigger.executionWindow(5, 30))
-                       /* .setConstraints(
-                                Constraint.ON_UNMETERED_NETWORK
-                        )*/
+                       .setConstraints(
+                                Constraint.DEVICE_CHARGING
+                        )
                 .build();
 
         dispatcher.mustSchedule(myJob);
