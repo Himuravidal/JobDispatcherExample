@@ -22,7 +22,6 @@ public class GeoJob extends JobService {
     public boolean onStartJob(JobParameters job) {
 
         Log.d("IS THIS HAPPENING", "here");
-
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mFusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
